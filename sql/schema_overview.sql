@@ -1,0 +1,12 @@
+-- HRUTA OneCRM logical schema inventory. The SQLAlchemy models in app/models.py
+-- are the executable source of truth for this starter. Use Alembic migrations for production.
+-- Identity: users, roles, user_roles
+-- CRM: organizations, contacts, leads, opportunities, activities
+-- Operations: tasks
+-- Finance: invoices, payment_transactions
+-- Governance: audit_logs
+-- Later proposal phases: internship_programs, applications, interviews, interns,
+-- attendance, internship_tasks, certificates, courses, batches, trainers, enrollments,
+-- sessions, assessments, feedback, partners, partnership_activities, agreements,
+-- projects, milestones, project_updates, attachments, notifications, integration_logs,
+-- configuration, refunds, payment_allocations.
