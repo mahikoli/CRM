@@ -38,6 +38,18 @@ app.include_router(finance.router, prefix="/api/v1")
 app.include_router(expanded.router, prefix="/api/v1")
 app.include_router(documents.router, prefix="/api/v1")
 
+@app.get("/", tags=["System"])
+@app.head("/", tags=["System"])
+def root():
+    return {
+        "status": "online",
+        "service": "HRUTA OneCRM API",
+        "docs": "/docs",
+        "health": "/health",
+        "version": "1.0.0"
+    }
+
 @app.get("/health", tags=["System"])
 def health():
     return {"status": "ok", "service": "HRUTA OneCRM API"}
+
