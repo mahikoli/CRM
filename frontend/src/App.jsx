@@ -9,7 +9,8 @@ import {
   Pencil, Award, UserCog, FileSpreadsheet, CalendarCheck2,
 } from "lucide-react";
 
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1").replace(/\/$/, "");
+const rawApiBase = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api/v1").trim().replace(/\/+$/, "");
+const API_BASE = rawApiBase.endsWith("/api/v1") ? rawApiBase : `${rawApiBase}/api/v1`;
 
 async function request(path, { token, body, form, multipart, method = "GET" } = {}) {
   const headers = {};
@@ -24,7 +25,7 @@ async function request(path, { token, body, form, multipart, method = "GET" } = 
       body: body !== undefined ? JSON.stringify(body) : (multipart || form),
     });
   } catch {
-    throw new Error(`Could not reach the API at ${API_BASE}. Start the backend and try again.`);
+    throw new Error(`Could not reach the API at ${API_BASE}. Ensure the backend is active on Render and CORS is configured.`);
   }
   const payload = await response.json().catch(() => null);
   if (!response.ok) {

@@ -23,7 +23,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="HRUTA OneCRM API", version="1.0.0", description="Role-based sales, internship, training, partnership, finance, and project CRM API", lifespan=lifespan)
 origins = [x.strip() for x in settings.cors_origins.split(",") if x.strip()]
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], allow_headers=["Authorization", "Content-Type"])
+allow_all = "*" in origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"] if allow_all else origins,
+    allow_origin_regex=None if allow_all else (settings.cors_origin_regex or None),
+    allow_credentials=not allow_all,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(crm.router, prefix="/api/v1")
 app.include_router(finance.router, prefix="/api/v1")

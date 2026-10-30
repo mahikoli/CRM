@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: hruta-onecrm-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 60
+      - key: CORS_ORIGINS
+        value: http://localhost:5173,http://127.0.0.1:5173
+      - key: CORS_ORIGIN_REGEX
+        value: ^https://.*\.vercel\.app$
+      - key: DATABASE_URL
+        sync: false
